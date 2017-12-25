@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <TextView
+        android:id="@+id/order_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NA"
+        android:layout_margin="8dp"
+        android:textSize="22sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-->"
+        android:layout_margin="10dp"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/order_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NA"
+        android:layout_margin="8dp"
+        android:textSize="22sp"/>
+
+    <TextView
+        android:id="@+id/order_memberNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已拼NA人"
+        android:layout_margin="8dp"
+        android:textSize="22sp"/>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="剩余"
+        android:layout_marginTop="8dp"
+        android:textSize="22sp"/>
+    <Chronometer
+        android:id="@+id/order_lefttime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:layout_marginTop="8dp"
+        android:format="00:00"/>
+
+</LinearLayout>

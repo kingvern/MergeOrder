@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.edu.pku.mergeorder.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:background="#000">
+        <TextView
+            android:id="@+id/add_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="创建订单"
+            android:layout_alignParentLeft="true"
+            android:textColor="#ffffffff"
+            android:onClick="onClick"
+            android:clickable="true"
+            android:layout_margin="10dip"
+            android:textSize="18.0dip" />
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="当前地区：大兴"
+            android:textColor="#ffffffff"
+            android:textSize="20.0dip" />
+        <TextView
+            android:id="@+id/register_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="注册/登录"
+            android:layout_alignParentRight="true"
+            android:textColor="#ffffffff"
+            android:onClick="onClick"
+            android:clickable="true"
+            android:layout_margin="10dip"
+            android:textSize="18.0dip" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/order_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

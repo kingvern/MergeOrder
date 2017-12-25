@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="25sp"
+        android:lines="1"
+        android:text="发起人手机号：12345678900"/>
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:text="起点：北京大学"
+        android:lines="1"
+        android:textSize="25sp"
+        />
+
+
+    <TextView
+        android:id="@+id/end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:text="终点：北京大学"
+        android:lines="1"
+        android:textSize="25sp"
+        />
+
+
+    <TextView
+        android:id="@+id/memberNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:text="人数上限：4"/>
+
+
+    <TextView
+        android:id="@+id/memberNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:text="已拼人数：1"/>
+
+    <TextView
+        android:id="@+id/lefttime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:text="剩余时间：5:00"
+        android:textSize="25sp"
+        />
+    <TextView
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="28sp"
+        android:onClick="onClick"
+        android:clickable="true"
+        android:text="取消/加入/退出"/>
+    <TextView
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="28sp"
+        android:onClick="onClick"
+        android:clickable="true"
+        android:text="成交"/>
+    <TextView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:text="返回"
+        android:onClick="onClick"
+        android:clickable="true"
+        android:textSize="25sp"/>
+
+
+</LinearLayout>
