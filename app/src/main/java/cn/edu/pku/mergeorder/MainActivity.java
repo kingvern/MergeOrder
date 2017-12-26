@@ -143,7 +143,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 response.append(str);
                             }
                             String responseStr = response.toString();
-                            Log.d("orderlistjson", responseStr);
+//                            Log.d("orderlistjson", responseStr);
 
                             listems.clear();
 
