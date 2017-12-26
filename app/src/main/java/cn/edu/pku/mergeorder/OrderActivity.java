@@ -112,7 +112,7 @@ public class OrderActivity extends Activity {
                     }else {
 //                        submit("http://47.95.255.230/quit.php?endTime="+endTime);
                         submit.setText("加入");
-                        submit("http://47.95.255.230/join.php");
+                        submit("http://47.95.255.230/quit.php");
                         guestInt = 0;
                     }
 
@@ -126,8 +126,8 @@ public class OrderActivity extends Activity {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    cancel();
-//                    submit("http://47.95.255.230/join.php");
+//                    cancel();
+                    submit("http://47.95.255.230/cancel.php");
                     Intent i = new Intent(OrderActivity.this, MainActivity.class);
                     startActivity(i);
                     finish();
@@ -141,7 +141,7 @@ public class OrderActivity extends Activity {
             @Override
             public void onClick(View view) {
 //                submit("http://47.95.255.230/done.php?endTime="+endTime);
-                submit("http://47.95.255.230/join.php");
+                submit("http://47.95.255.230/done.php");
                 Intent i = new Intent(OrderActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
