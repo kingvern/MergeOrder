@@ -1,6 +1,11 @@
 package cn.edu.pku.mergeorder;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +55,13 @@ public class TimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //这是后端提供的注册接口
-                start("hhttp://47.95.255.230/add.php");
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                if (ActivityCompat.checkSelfPermission(TimeActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                Uri data = Uri.parse("tel:17600200127");
+                intent.setData(data);
+                startActivity(intent);
             }
         });
     }

@@ -3,18 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="@drawable/view_page"
     android:orientation="vertical">
     <TextView
         android:id="@+id/master"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:textSize="25sp"
+        android:textSize="35sp"
+        android:layout_marginTop="30dp"
+        android:textColor="#fff"
         android:lines="1"
         android:onClick="onClick"
         android:clickable="true"
-        android:text="发起人手机号：12345678900"/>
+        android:text="发起人：12345678900"/>
 
     <TextView
         android:id="@+id/start"
@@ -24,7 +27,8 @@
         android:layout_margin="5dp"
         android:text="起点：北京大学"
         android:lines="1"
-        android:textSize="25sp"
+        android:textSize="32sp"
+        android:textColor="#fff"
         />
 
 
@@ -35,8 +39,9 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:text="终点：北京大学"
+        android:textColor="#fff"
         android:lines="1"
-        android:textSize="25sp"
+        android:textSize="32sp"
         />
 
 
@@ -46,7 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_gravity="center"
-        android:textSize="25sp"
+        android:textColor="#fff"
+        android:textSize="32sp"
         android:text="人数上限：4"/>
 
 
@@ -56,18 +62,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_gravity="center"
-        android:textSize="25sp"
+        android:textSize="32sp"
+        android:textColor="#fff"
         android:text="已拼人数：1"/>
 
     <TextView
         android:id="@+id/lefttime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:textColor="#fff"
         android:layout_margin="5dp"
         android:layout_gravity="center"
-        android:text="剩余时间：5:00"
-        android:textSize="25sp"
+        android:text="剩余：5:00"
+        android:textSize="55sp"
         />
     <TextView
         android:id="@+id/submit"
@@ -75,7 +82,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:textSize="28sp"
+        android:textColor="#fff"
+        android:textSize="35sp"
         android:onClick="onClick"
         android:clickable="true"
         android:text="取消/加入/退出"/>
@@ -85,7 +93,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:textSize="28sp"
+        android:textColor="#fff"
+        android:textSize="35sp"
         android:onClick="onClick"
         android:clickable="true"
         android:text="成交"/>
@@ -97,8 +106,9 @@
         android:layout_gravity="center"
         android:text="返回"
         android:onClick="onClick"
+        android:textColor="#fff"
         android:clickable="true"
-        android:textSize="25sp"/>
+        android:textSize="35sp"/>
 
 
 </LinearLayout>

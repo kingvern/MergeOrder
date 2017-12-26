@@ -88,15 +88,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         mlist = (ListView) findViewById(R.id.order_list);
         listems = new ArrayList<Map<String, String>>();
-        for(int i = 0; i<3; i++){
-            Map<String, String> listem = new HashMap<String, String>();
-            listem.put("orderNo","NA");
-            listem.put("start","NA");
-            listem.put("end","NA");
-            listem.put("memberNo","已拼"+"NA"+"人");
-            listem.put("endtime","剩余"+"NA");
-            listems.add(listem);
-        }
+//        for(int i = 0; i<3; i++){
+//            Map<String, String> listem = new HashMap<String, String>();
+//            listem.put("orderNo","NA");
+//            listem.put("start","NA");
+//            listem.put("end","NA");
+//            listem.put("memberNo","已拼"+"NA"+"人");
+//            listem.put("endtime","剩余"+"NA");
+//            listems.add(listem);
+//        }
         simplead = new SimpleAdapter(this, listems,
                 R.layout.item, new String[] { "start", "end", "memberNo","memberNow", "endtime"},
                 new int[] {R.id.order_start,R.id.order_end,R.id.order_memberNo,R.id.order_memberNow,R.id.order_lefttime});
@@ -158,8 +158,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                     listem.put("master", jsonObject.getString("master"));
                                     listem.put("start", jsonObject.getString("start"));
                                     listem.put("end", jsonObject.getString("end"));
-                                    listem.put("memberNo", jsonObject.getString("memberNo"));
-                                    listem.put("memberNow", jsonObject.getString("memberNow"));
+                                    listem.put("memberNo", "人数上限："+jsonObject.getString("memberNo"));
+                                    listem.put("memberNow", "已拼人数："+jsonObject.getString("memberNow"));
 //                                    int lefttimeInt = (int)(Long.valueOf(jsonObject.getString("endtime"))/1000 - time/1000);
 //                                    String lefttime = secondTurnMinute(lefttimeInt);
                                     listem.put("endTime",jsonObject.getString("endTime"));

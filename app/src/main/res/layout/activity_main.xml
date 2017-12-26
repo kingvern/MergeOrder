@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="@drawable/view_page"
     tools:context="cn.edu.pku.mergeorder.MainActivity">
 
     <RelativeLayout
@@ -14,7 +16,6 @@
             android:id="@+id/add_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="创建订单"
             android:layout_alignParentLeft="true"
             android:textColor="#ffffffff"
@@ -34,7 +35,6 @@
             android:id="@+id/register_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="注册/登录"
             android:layout_alignParentRight="true"
             android:textColor="#ffffffff"

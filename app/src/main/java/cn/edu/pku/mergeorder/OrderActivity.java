@@ -73,23 +73,25 @@ public class OrderActivity extends Activity {
         }
     };
 
-    @SuppressLint("MissingPermission")
     private void refreshUI() {
         long time = System.currentTimeMillis();
-        lefttime.setText(secondTurnMinute((int) ((Long.valueOf(endTime) - time) / 1000)));
-        memberNow.setText(memberNowStr);
+        lefttime.setText("剩余："+secondTurnMinute((int) ((Long.valueOf(endTime) - time) / 1000)));
+        memberNow.setText("已拼人数："+memberNowStr);
         if (time >= Long.valueOf(endTime) && isAliveInt != 0) {
             submit("http://47.95.255.230/cancel.php");
+            Toast.makeText(OrderActivity.this,"时间到了，默认取消",Toast.LENGTH_SHORT).show();
             Intent i = new Intent(OrderActivity.this, MainActivity.class);
             startActivity(i);
             finish();
         }
         if (isAliveInt == 2 && id.equals("guest")) {
             //打电话
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + masterStr));
+            Intent intent = new Intent(Intent.ACTION_CALL);
             if (ActivityCompat.checkSelfPermission(OrderActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
+            Uri data = Uri.parse("tel:17600200127");
+            intent.setData(data);
             startActivity(intent);
         }
 //        memberNow.setText("已拼人数："+i.getStringExtra("memberNow"));
@@ -115,7 +117,7 @@ public class OrderActivity extends Activity {
         done = (TextView) findViewById(R.id.done);
 
         Intent i = this.getIntent();
-        master.setText("起点："+i.getStringExtra("master"));
+        master.setText("发起人："+i.getStringExtra("master"));
         masterStr = i.getStringExtra("master");
         start.setText("起点："+i.getStringExtra("start"));
 //        Log.d("start", i.getStringExtra("start"));
@@ -160,10 +162,12 @@ public class OrderActivity extends Activity {
             master.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:17600200127"));
+                    Intent intent = new Intent(Intent.ACTION_CALL);
                     if (ActivityCompat.checkSelfPermission(OrderActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         return;
                     }
+                    Uri data = Uri.parse("tel:17600200127");
+                    intent.setData(data);
                     startActivity(intent);
                 }
             });
@@ -257,11 +261,11 @@ public class OrderActivity extends Activity {
                                        e.printStackTrace();
                                    }
 
-                                   if (!memberNowStr.isEmpty() && memberNowStr!=null) {
-                                       Toast.makeText(OrderActivity.this,"成功!",Toast.LENGTH_SHORT).show();
-                                   } else {
-                                       Toast.makeText(OrderActivity.this,"错误!",Toast.LENGTH_SHORT).show();
-                                   }
+//                                   if (!memberNowStr.isEmpty() && memberNowStr!=null) {
+//                                       Toast.makeText(OrderActivity.this,"成功!",Toast.LENGTH_SHORT).show();
+//                                   } else {
+//                                       Toast.makeText(OrderActivity.this,"错误!",Toast.LENGTH_SHORT).show();
+//                                   }
 
                                }
                            });
@@ -328,247 +332,6 @@ public class OrderActivity extends Activity {
         });
     }
 
-//-----------------------------------------------------------------------------------------------------------------------------------------
-
-    private void cancel() {
-        String s = "http://47.95.255.230/cancel.php";
-
-        //初始化okhttp客户端
-//        OkHttpClient client = new OkHttpClient.Builder().build();
-        //创建post表单，获取username和password（没有做非空判断）
-        RequestBody post = new FormBody.Builder()
-                .add("endTime", endTime)
-                .build();
-        //开始请求，填入url，和表单
-        final Request request = new Request.Builder()
-                .url(s)
-                .post(post)
-                .build();
-
-        //客户端回调
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //失败的情况（一般是网络链接问题，服务器错误等）
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                //UI线程运行
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            //临时变量（这是okhttp的一个锅，一次请求的response.body().string()只能用一次，否则就会报错）
-                            OrderActivity.this.s = response.body().string();
-
-                            //解析出后端返回的数据来
-                            JSONObject jsonObject = new JSONObject(String.valueOf(OrderActivity.this.s));
-                            retCode = jsonObject.getInt("success");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        //客户端自己判断是否成功。
-                        if (retCode == 1) {
-                            Toast.makeText(OrderActivity.this,"取消成功!",Toast.LENGTH_SHORT).show();
-                            //跳转
-                            Intent i = new Intent(OrderActivity.this,MainActivity.class);
-                            startActivity(i);
-//                setResult(RESULT_OK,i);
-                            finish();
-
-                        } else {
-                            Toast.makeText(OrderActivity.this,"取消失败!",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    private void join() {
-        String s = "http://47.95.255.230/join.php";
-
-        //初始化okhttp客户端
-        OkHttpClient client = new OkHttpClient.Builder().build();
-        //创建post表单，获取username和password（没有做非空判断）
-        RequestBody post = new FormBody.Builder()
-                .add("endTime", endTime)
-                .build();
-        //开始请求，填入url，和表单
-        final Request request = new Request.Builder()
-                .url(s)
-                .post(post)
-                .build();
-
-        //客户端回调
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //失败的情况（一般是网络链接问题，服务器错误等）
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                //UI线程运行
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            //临时变量（这是okhttp的一个锅，一次请求的response.body().string()只能用一次，否则就会报错）
-                            OrderActivity.this.s = response.body().string();
-
-                            //解析出后端返回的数据来
-                            JSONObject jsonObject = new JSONObject(String.valueOf(OrderActivity.this.s));
-                            retCode = jsonObject.getInt("success");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        //客户端自己判断是否成功。
-                        if (retCode == 1) {
-                            Toast.makeText(OrderActivity.this,"加入成功!",Toast.LENGTH_SHORT).show();
-                            //跳转
-                            Intent i = new Intent(OrderActivity.this,MainActivity.class);
-                            startActivity(i);
-//                setResult(RESULT_OK,i);
-                            finish();
-
-                        } else {
-                            Toast.makeText(OrderActivity.this,"加入失败!",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    private void quit() {
-        String s = "http://47.95.255.230/quit.php";
-
-        //初始化okhttp客户端
-        OkHttpClient client = new OkHttpClient.Builder().build();
-        //创建post表单，获取username和password（没有做非空判断）
-        RequestBody post = new FormBody.Builder()
-                .add("endTime", endTime)
-                .build();
-        //开始请求，填入url，和表单
-        final Request request = new Request.Builder()
-                .url(s)
-                .post(post)
-                .build();
-
-        //客户端回调
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //失败的情况（一般是网络链接问题，服务器错误等）
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                //UI线程运行
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            //临时变量（这是okhttp的一个锅，一次请求的response.body().string()只能用一次，否则就会报错）
-                            OrderActivity.this.s = response.body().string();
-
-                            //解析出后端返回的数据来
-                            JSONObject jsonObject = new JSONObject(String.valueOf(OrderActivity.this.s));
-                            retCode = jsonObject.getInt("success");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        //客户端自己判断是否成功。
-                        if (retCode == 1) {
-                            Toast.makeText(OrderActivity.this,"褪裙成功!",Toast.LENGTH_SHORT).show();
-                            //跳转
-                            Intent i = new Intent(OrderActivity.this,MainActivity.class);
-                            startActivity(i);
-//                setResult(RESULT_OK,i);
-                            finish();
-
-                        } else {
-                            Toast.makeText(OrderActivity.this,"褪裙失败!",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    private void done() {
-        String s = "http://47.95.255.230/done.php";
-
-        //初始化okhttp客户端
-        OkHttpClient client = new OkHttpClient.Builder().build();
-        //创建post表单，获取username和password（没有做非空判断）
-        RequestBody post = new FormBody.Builder()
-                .add("endTime", endTime)
-                .build();
-        //开始请求，填入url，和表单
-        final Request request = new Request.Builder()
-                .url(s)
-                .post(post)
-                .build();
-
-        //客户端回调
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //失败的情况（一般是网络链接问题，服务器错误等）
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                //UI线程运行
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            //临时变量（这是okhttp的一个锅，一次请求的response.body().string()只能用一次，否则就会报错）
-                            OrderActivity.this.s = response.body().string();
-
-                            //解析出后端返回的数据来
-                            JSONObject jsonObject = new JSONObject(String.valueOf(OrderActivity.this.s));
-                            retCode = jsonObject.getInt("success");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        //客户端自己判断是否成功。
-                        if (retCode == 1) {
-                            Toast.makeText(OrderActivity.this,"成交了!",Toast.LENGTH_SHORT).show();
-                            //跳转
-                            Intent i = new Intent(OrderActivity.this,MainActivity.class);
-                            startActivity(i);
-//                setResult(RESULT_OK,i);
-                            finish();
-
-                        } else {
-                            Toast.makeText(OrderActivity.this,"未能成交!同志仍需努力",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-    }
 
 
 }

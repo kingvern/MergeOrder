@@ -3,20 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="@drawable/view_page"
     android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:textSize="25sp"
-        android:text="创建拼单"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:textSize="20sp"
+        android:textSize="33sp"
+        android:textColor="#fff"
         android:gravity="center"
         android:text="起点"/>
     <EditText
@@ -25,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:textSize="20sp"
+        android:textSize="33sp"
+        android:textColor="#fff"
         android:gravity="center"
         />
     <TextView
@@ -33,7 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:textSize="20sp"
+        android:textColor="#fff"
+        android:textSize="33sp"
         android:text="终点"/>
 
     <EditText
@@ -42,24 +40,27 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_gravity="center"
-        android:textSize="20sp"
+        android:textSize="33sp"
         android:gravity="center"
+        android:textColor="#fff"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:textSize="20sp"
+        android:textSize="33sp"
+        android:textColor="#fff"
         android:text="人数上限"/>
 
     <EditText
         android:id="@+id/memberNo"
-        android:layout_width="50dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_gravity="center"
-        android:textSize="20sp"
+        android:textColor="#fff"
+        android:textSize="33sp"
         android:gravity="center"
         />
     <TextView
@@ -67,16 +68,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:textSize="20sp"
+        android:textColor="#fff"
+        android:textSize="33sp"
         android:text="等待时间"/>
 
     <EditText
         android:id="@+id/lefttime"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_gravity="center"
-        android:textSize="20sp"
+        android:textSize="33sp"
+        android:textColor="#fff"
         android:gravity="center"
         />
     <TextView
@@ -85,7 +88,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:textSize="25sp"
+        android:textColor="#fff"
+        android:textSize="33sp"
         android:onClick="onClick"
         android:clickable="true"
         android:text="提交"/>
@@ -95,11 +99,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_gravity="center"
+        android:textColor="#fff"
         android:gravity="center"
-        android:text="返回"
+        android:text="取消"
         android:onClick="onClick"
         android:clickable="true"
-        android:textSize="25sp"/>
+        android:textSize="33sp"/>
 
 
 </LinearLayout>
