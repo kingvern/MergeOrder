@@ -1,14 +1,19 @@
 package cn.edu.pku.mergeorder;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -46,14 +51,19 @@ import static cn.edu.pku.mergeorder.TimeChange.secondTurnMinute;
 
 public class OrderActivity extends Activity {
 
-    TextView start,end,memberNo,memberNow,submit,lefttime,back,done;
-    long lefttimeInt = 0;
+    TextView master, start, end, memberNo, memberNow, submit, lefttime, back, done;
+    String memberNowStr = "";
+    String memberNoStr = "";
+    String masterStr = "";
+    int isAliveInt = 1;
     String endTime = "";
-    int guestInt=0;
+    String id = "";
+    int guestInt = 0;
 
     int retCode;
 
     String s;
+    String ss;
     OkHttpClient client = new OkHttpClient.Builder().build();
 
     private Handler mHandler = new Handler() {
@@ -63,10 +73,25 @@ public class OrderActivity extends Activity {
         }
     };
 
+    @SuppressLint("MissingPermission")
     private void refreshUI() {
-        long time=System.currentTimeMillis();
-        lefttime.setText(secondTurnMinute((int)((Long.valueOf(endTime)-time)/1000)));
-
+        long time = System.currentTimeMillis();
+        lefttime.setText(secondTurnMinute((int) ((Long.valueOf(endTime) - time) / 1000)));
+        memberNow.setText(memberNowStr);
+        if (time >= Long.valueOf(endTime) && isAliveInt != 0) {
+            submit("http://47.95.255.230/cancel.php");
+            Intent i = new Intent(OrderActivity.this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+        if (isAliveInt == 2 && id.equals("guest")) {
+            //打电话
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + masterStr));
+            if (ActivityCompat.checkSelfPermission(OrderActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            startActivity(intent);
+        }
 //        memberNow.setText("已拼人数："+i.getStringExtra("memberNow"));
 
     }
@@ -76,6 +101,8 @@ public class OrderActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+        master = (TextView) findViewById(R.id.master);
 
         start = (TextView) findViewById(R.id.start);
 
@@ -88,14 +115,20 @@ public class OrderActivity extends Activity {
         done = (TextView) findViewById(R.id.done);
 
         Intent i = this.getIntent();
+        master.setText("起点："+i.getStringExtra("master"));
+        masterStr = i.getStringExtra("master");
         start.setText("起点："+i.getStringExtra("start"));
 //        Log.d("start", i.getStringExtra("start"));
         end.setText("终点："+i.getStringExtra("end"));
         memberNo.setText("人数上限："+i.getStringExtra("memberNo"));
+        memberNoStr = i.getStringExtra("memberNo");
         memberNow.setText("已拼人数："+i.getStringExtra("memberNow"));
+        memberNowStr = i.getStringExtra("memberNow");
+
+        id = i.getStringExtra("id");
 
         endTime = i.getStringExtra("endTime");
-        if(i.getStringExtra("id").equals("guest")) {//客人来了
+        if(id.equals("guest")) {//客人来了
             done.setVisibility(View.GONE);
             guestInt = 0;
 
@@ -103,20 +136,35 @@ public class OrderActivity extends Activity {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(guestInt == 0) {
-//                        submit("http://47.95.255.230/join.php?endTime="+endTime);
-                        submit("http://47.95.255.230/join.php");
-                        submit.setText("退出");
-                        guestInt = 1;
+                    if(guestInt == 0) {//join
+                        if(Integer.valueOf(memberNoStr)>=Integer.valueOf(memberNowStr)){
+                            submit("http://47.95.255.230/join.php");
+                            submit.setText("退出");
+                            guestInt = 1;
+                        }else {
+                            Toast.makeText(OrderActivity.this,memberNoStr+"抱歉，过载！"+memberNowStr,Toast.LENGTH_SHORT).show();
+                        }
 
-                    }else {
-//                        submit("http://47.95.255.230/quit.php?endTime="+endTime);
-                        submit.setText("加入");
+
+                    }else {//quit
+
                         submit("http://47.95.255.230/quit.php");
+                        submit.setText("加入");
                         guestInt = 0;
                     }
 
 
+                }
+            });
+
+            master.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:17600200127"));
+                    if (ActivityCompat.checkSelfPermission(OrderActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    startActivity(intent);
                 }
             });
         }else {//主人做客
@@ -164,11 +212,62 @@ public class OrderActivity extends Activity {
 
 
     }
+
+
+
     private Runnable mRunnable = new Runnable() {
          public void run() {
+             String addr =  "http://47.95.255.230/checkorder.php?endTime="+endTime;
+             Log.d("addr", "run: "+addr );
           while(true) {
                try {
                Thread.sleep(1000);
+
+                   Request request = new Request.Builder()
+                           .get()
+                           .url(addr)
+                           .build();
+
+                   //客户端回调
+                   client.newCall(request).enqueue(new Callback() {
+                       @Override
+                       public void onFailure(Call call, IOException e) {
+                           //失败的情况（一般是网络链接问题，服务器错误等）
+                       }
+
+                       @Override
+                       public void onResponse(Call call, final Response response) throws IOException {
+                           //UI线程运行
+                           runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+
+                                   try {
+                                       //临时变量（这是okhttp的一个锅，一次请求的response.body().string()只能用一次，否则就会报错）
+                                       OrderActivity.this.ss = response.body().string();
+                                       Log.d("OrderActivity.this.ss ", "run: "+OrderActivity.this.ss );
+
+                                       //解析出后端返回的数据来
+                                       JSONObject jsonObject = new JSONObject(String.valueOf(OrderActivity.this.ss));
+                                       memberNowStr = jsonObject.getString("memberNow");
+                                       isAliveInt = jsonObject.getInt("isAlive");
+                                   } catch (JSONException e) {
+                                       e.printStackTrace();
+                                   } catch (IOException e) {
+                                       e.printStackTrace();
+                                   }
+
+                                   if (!memberNowStr.isEmpty() && memberNowStr!=null) {
+                                       Toast.makeText(OrderActivity.this,"成功!",Toast.LENGTH_SHORT).show();
+                                   } else {
+                                       Toast.makeText(OrderActivity.this,"错误!",Toast.LENGTH_SHORT).show();
+                                   }
+
+                               }
+                           });
+
+                       }
+                       });
                 mHandler.sendMessage(mHandler.obtainMessage());
                 } catch (InterruptedException e) {
                 e.printStackTrace();

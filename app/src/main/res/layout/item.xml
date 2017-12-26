@@ -29,6 +29,13 @@
         android:id="@+id/order_memberNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="人数上限"
+        android:layout_margin="8dp"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/order_memberNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="已拼NA人"
         android:layout_margin="8dp"
         android:textSize="22sp"/>

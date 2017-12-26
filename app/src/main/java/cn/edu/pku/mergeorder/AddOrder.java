@@ -202,49 +202,5 @@ public class AddOrder extends Activity {
         });
     }
 
-    private void adddd() {
-        String startStr = start.getText().toString();
-        String endStr = end.getText().toString();
-        String memberNoStr = memberNo.getText().toString();
-        String lefttimeStr = lefttime.getText().toString();
-
-        long time = System.currentTimeMillis();
-
-        long endTimeLong = time + Long.valueOf(minuteTurnSecond(lefttimeStr)) * 1000;
-
-        SharedPreferences sharedPrefeSrences = getSharedPreferences("config", MODE_PRIVATE);
-        String phoneNoStr = sharedPrefeSrences.getString("phoneNo", "null");
-//                ArrayList values = new ArrayList();
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("start", "1"));
-        params.add(new BasicNameValuePair("end", "1"));
-        params.add(new BasicNameValuePair("memberNo", "1"));
-        params.add(new BasicNameValuePair("endTime", "1"));
-        params.add(new BasicNameValuePair("master", "1"));
-
-//                values.add(new BasicNameValuePair("start", startStr));
-//                values.add(new BasicNameValuePair("end", endStr));
-//                values.add(new BasicNameValuePair("memberNo", memberNoStr));
-//                values.add(new BasicNameValuePair("endTime", String.valueOf(endTimeLong)));
-//                values.add(new BasicNameValuePair("master", phoneNoStr));
-        //http post
-        try {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://47.95.255.230/add.php");
-            httppost.setEntity(new UrlEncodedFormEntity(params));
-            HttpResponse response = httpclient.execute(httppost);
-        } catch (Exception e) {
-            Log.i("eeeeee", "eeeeeeerrrrrrrrrr");
-        }
-//                JSONParser jsonParser = new JSONParser();
-//
-//                try{
-//                    JSONObject json = jsonParser.makeHttpRequest(url,"POST", params);
-//                    Log.v("uploadsucceed", "uploadsucceed");
-//
-//                }catch(Exception e){
-//                    e.printStackTrace();
-//                }
-    }
 
 }
