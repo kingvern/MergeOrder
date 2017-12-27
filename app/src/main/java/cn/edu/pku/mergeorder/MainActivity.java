@@ -109,8 +109,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 i.putExtra("master",map.get("master"));
                 i.putExtra("start",map.get("start"));
                 i.putExtra("end",map.get("end"));
-                i.putExtra("memberNo",map.get("memberNo"));
-                i.putExtra("memberNow",map.get("memberNow"));
+                i.putExtra("memberNo",map.get("memberNo").substring(5).trim());
+                i.putExtra("memberNow",map.get("memberNow").substring(5).trim());
                 i.putExtra("endTime",map.get("endTime"));
                 i.putExtra("id","guest");
                 Log.d("start", map.get("start"));
